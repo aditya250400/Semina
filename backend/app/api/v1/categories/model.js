@@ -5,13 +5,13 @@ let categorySchema = Schema(
   {
     name: {
       type: String,
-      minLength: 13,
+      minLength: 3,
       maxLength: 50,
       required: true,
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   },
 );
 

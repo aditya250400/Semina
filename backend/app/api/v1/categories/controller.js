@@ -6,6 +6,8 @@ const create = async (req, res, next) => {
     const result = await Categories.create({ name });
 
     res.status(201).json({
+      status: true,
+      message: "Kategori berhasil dibuat",
       data: result,
     });
   } catch (e) {
@@ -31,10 +33,56 @@ const show = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await Categories.findOne({ _id: id });
+    const result = await Categories.findOne({ _id: id }).select("_id name");
+
+    if (!result) {
+      return res.status(404).json({
+        status: false,
+        message: "Kategori tidak ditemukan",
+        data: null,
+      });
+    }
 
     res.status(200).json({
+      status: true,
+      message: `Category ${result.name}`,
       data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    const result = await Categories.findOneAndUpdate(
+      { _id: id },
+      { name },
+      { new: true, runValidators: true },
+    );
+
+    res.status(201).json({
+      status: true,
+      message: "Kategori berhasil diupdate",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const destroy = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await Categories.findByIdAndDelete(id);
+
+    res.status(200).json({
+      status: true,
+      message: "Kategori berhasil dihapus",
+      data: null,
     });
   } catch (e) {
     next(e);
@@ -45,4 +93,6 @@ module.exports = {
   create,
   index,
   show,
+  update,
+  destroy,
 };

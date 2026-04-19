@@ -16,7 +16,14 @@ app.use(express.static(path.join(__dirname, "public")));
 const categoriesRouter = require("./app/api/v1/categories/router");
 const v1 = "/api/v1/cms";
 
+//middleware
+const notFoundMiddleware = require("./app/middlewares/not-found");
+const handlerErrorMiddleware = require("./app/middlewares/handler-error");
+
 app.use(v1, categoriesRouter);
+
+app.use(notFoundMiddleware);
+app.use(handlerErrorMiddleware);
 
 app.use("/", (req, res) => {
   res.status(200).json({

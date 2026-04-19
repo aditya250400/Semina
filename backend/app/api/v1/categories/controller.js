@@ -3,6 +3,8 @@ const {
   getAllCategories,
   createCategories,
   getOneCategories,
+  updateCategories,
+  deleteCategories,
 } = require("../../../service/mongoose/categories");
 
 const create = async (req, res, next) => {
@@ -48,15 +50,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    const result = await Categories.findOneAndUpdate(
-      { _id: id },
-      { name },
-      { new: true, runValidators: true },
-    );
-
+    const result = await updateCategories(req);
     res.status(201).json({
       status: true,
       message: "Kategori berhasil diupdate",
@@ -69,12 +63,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const result = await Categories.findByIdAndDelete(id);
+    const result = await deleteCategories(req);
 
     res.status(200).json({
       status: true,
-      message: "Kategori berhasil dihapus",
+      message: `Kategori dengan nama ${result.name} berhasil dihapus`,
       data: null,
     });
   } catch (e) {

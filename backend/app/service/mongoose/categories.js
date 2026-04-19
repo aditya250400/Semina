@@ -1,5 +1,6 @@
 const Categories = require("../../api/v1/categories/model");
 const { BadRequestError, NotFoundError } = require("../../errors");
+const NotFound = require("../../errors/not-found");
 
 const getAllCategories = async () => {
   const result = await Categories.find();
@@ -29,4 +30,41 @@ const getOneCategories = async (req) => {
   return result;
 };
 
-module.exports = { getAllCategories, createCategories, getOneCategories };
+const updateCategories = async (req) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const check = await Categories.findOne({
+    name,
+    _id: { $ne: id },
+  });
+
+  if (check) throw new BadRequestError("nama kategori duplikat");
+
+  const result = await Categories.findOneAndUpdate(
+    { _id: id },
+    { name },
+    { new: true, runValidators: true },
+  );
+
+  if (!result) throw new NotFound("kategori tidak ditemukan");
+
+  return result;
+};
+
+const deleteCategories = async (req) => {
+  const { id } = req.params;
+  const result = await Categories.findByIdAndDelete(id);
+
+  if (!result) throw new NotFound("kategori tidak ditemukan");
+
+  return result;
+};
+
+module.exports = {
+  getAllCategories,
+  createCategories,
+  getOneCategories,
+  updateCategories,
+  deleteCategories,
+};

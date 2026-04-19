@@ -56,7 +56,7 @@ const deleteCategories = async (req) => {
   const { id } = req.params;
   const result = await Categories.findByIdAndDelete(id);
 
-  if (!result) throw new NotFound("kategori tidak ditemukan");
+  if (!result) throw new NotFound(`kategori tidak ditemukan`);
 
   return result;
 };

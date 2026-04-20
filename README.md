@@ -69,13 +69,3 @@ The platform is designed to support multiple roles **Owner, Organizer, Admin, an
 | Participant | View event details                                |
 | Participant | Checkout tickets                                  |
 | Participant | View order history                                |
-
----
-
-## 💡 Future Improvements
-
-* Payment gateway integration (Midtrans, Xendit, etc.)
-* Email notifications
-* Role-based dashboard UI enhancement
-
----

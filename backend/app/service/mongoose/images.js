@@ -1,4 +1,5 @@
 const Images = require("../../api/v1/images/model");
+const { NotFoundError } = require("../../errors");
 
 const generateImage = async (req) => {
   const result = `uploads/${req.file.filename}`;
@@ -16,4 +17,13 @@ const createImage = async (req) => {
   return result;
 };
 
-module.exports = { createImage, generateImage };
+const checkingImage = async (id) => {
+  const result = await Images.findOne({ _id: id });
+  console.log(result);
+
+  if (!result) throw new NotFoundError("Gambar tidak ditemukan");
+
+  return result;
+};
+
+module.exports = { createImage, generateImage, checkingImage };

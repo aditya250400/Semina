@@ -1,19 +1,19 @@
 const {
-  createTalents,
-  getAllTalents,
-  getOneTalents,
-  updateTalents,
-  deleteTalents,
-} = require("../../../service/mongoose/talents");
-const Talents = require("./model");
+  createEvents,
+  getAllEvents,
+  getOneEvents,
+  updateEvents,
+  deleteEvents,
+} = require("../../../service/mongoose/events");
+const Events = require("./model");
 const { StatusCodes } = require("http-status-codes");
 
 const create = async (req, res, next) => {
   try {
-    const result = await createTalents(req);
+    const result = await createEvents(req);
     res.status(StatusCodes.CREATED).json({
       status: true,
-      message: "Pembicara berhasil dibuat",
+      message: "Acara berhasil dibuat",
       data: result,
     });
   } catch (e) {
@@ -23,11 +23,11 @@ const create = async (req, res, next) => {
 
 const index = async (req, res, next) => {
   try {
-    const result = await getAllTalents(req);
+    const result = await getAllEvents(req);
 
     res.status(StatusCodes.OK).json({
       status: true,
-      message: "List Talents ",
+      message: "List Acara",
       data: result,
     });
   } catch (e) {
@@ -37,11 +37,11 @@ const index = async (req, res, next) => {
 
 const show = async (req, res, next) => {
   try {
-    const result = await getOneTalents(req);
+    const result = await getOneEvents(req);
 
     res.status(StatusCodes.OK).json({
       status: true,
-      message: `Pembicara atas nama: ${result.name}`,
+      message: `Acara dengan judul: ${result.title}`,
       data: result,
     });
   } catch (e) {
@@ -51,10 +51,10 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const result = await updateTalents(req);
+    const result = await updateEvents(req);
     res.status(StatusCodes.OK).json({
       status: true,
-      message: "Pembicara berhasil diupdate",
+      message: "Acara berhasil diupdate",
       data: result,
     });
   } catch (e) {
@@ -64,11 +64,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    const result = await deleteTalents(req);
+    const result = await deleteEvents(req);
 
     res.status(StatusCodes.OK).json({
       status: true,
-      message: `Pembicara dengan nama ${result.name} berhasil dihapus`,
+      message: `Acara dengan judul ${result.title} berhasil dihapus`,
       data: null,
     });
   } catch (e) {

@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const categoriesRouter = require("./app/api/v1/categories/router");
 const imagesRouter = require("./app/api/v1/images/router");
 const talentRouter = require("./app/api/v1/talents/router");
+const eventRouter = require("./app/api/v1/events/router");
 const v1 = "/api/v1/cms";
 
 //middleware
@@ -25,6 +26,7 @@ const handlerErrorMiddleware = require("./app/middlewares/handler-error");
 app.use(v1, categoriesRouter);
 app.use(v1, talentRouter);
 app.use(v1, imagesRouter);
+app.use(v1, eventRouter);
 
 app.use(notFoundMiddleware);
 app.use(handlerErrorMiddleware);

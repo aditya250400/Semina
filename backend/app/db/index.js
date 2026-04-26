@@ -1,10 +1,10 @@
 // (1) import package mongoose
 const mongoose = require("mongoose");
 
-// (2) kita import konfigurasi terkait MongoDB dari app/config.js
+// (2) import konfigurasi terkait MongoDB dari app/config.js
 const { urlDb } = require("../config");
 
-// (3) connect ke MongoDB menggunakan konfigurasi yang telah kita import
+// (3) connect ke MongoDB menggunakan konfigurasi yang telah diimport
 mongoose.connect(urlDb);
 
 // (4) simpan koneksi dalam constant db

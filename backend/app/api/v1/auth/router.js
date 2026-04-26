@@ -1,0 +1,7 @@
+const express = require("express");
+const router = express();
+const { signinCms } = require("./controller");
+
+router.post("/auth/login", signinCms);
+
+module.exports = router;

@@ -1,5 +1,5 @@
 const Users = require("../../api/v1/users/model");
-const { BadRequestError, UnauthorizedError } = require("../../errors");
+const { BadRequestError, UnauthenticatedError } = require("../../errors");
 const { createTokenUser, createJWT } = require("../utils");
 
 const signin = async (req) => {
@@ -10,10 +10,10 @@ const signin = async (req) => {
   }
 
   const result = await Users.findOne({ email });
-  if (!result) throw new UnauthorizedError("Invalid Credentials");
+  if (!result) throw new UnauthenticatedError("Invalid Credentials");
 
   const isPasswordCorrect = await result.comparePassword(password);
-  if (!isPasswordCorrect) throw new UnauthorizedError("Invalid Credentials");
+  if (!isPasswordCorrect) throw new UnauthenticatedError("Invalid Credentials");
 
   const token = createJWT({ payload: createTokenUser(result) });
 

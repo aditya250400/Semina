@@ -3,10 +3,10 @@ const router = express();
 const { create, index, show, update, destroy } = require("./controller");
 const {
   authenticateUser,
-  //   authorizeRoles,
+  authorizeRoles,
 } = require("../../../middlewares/auth");
 
-router.get("/categories", authenticateUser, index);
+router.get("/categories", authenticateUser, authorizeRoles("organizer"), index);
 
 router.get("/categories/:id", authenticateUser, show);
 

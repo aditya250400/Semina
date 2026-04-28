@@ -52,6 +52,7 @@ const createEvents = async (req) => {
   await checkingCategories(category);
   await checkingTalents(talent);
 
+  console.log("id organizer: " + req.user.organizer);
   const check = await Events.findOne({ title });
 
   if (check) throw new BadRequestError("Judul event sudah ada di sistem");

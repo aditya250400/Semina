@@ -61,6 +61,10 @@ const EventSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Image",
     },
+    organizer: {
+      type: mongoose.Types.ObjectId,
+      ref: "Organizer",
+    },
     category: {
       type: mongoose.Types.ObjectId,
       ref: "Category",
@@ -71,7 +75,7 @@ const EventSchema = new mongoose.Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   },
 );
 

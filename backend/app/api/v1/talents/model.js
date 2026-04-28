@@ -11,6 +11,11 @@ let talentSchema = Schema(
       type: String,
       default: "-",
     },
+    organizer: {
+      type: mongoose.Types.ObjectId,
+      ref: "Organizer",
+      required: true,
+    },
     image: {
       type: mongoose.Types.ObjectId,
       ref: "Image",

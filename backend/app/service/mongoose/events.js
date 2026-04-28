@@ -160,10 +160,30 @@ const deleteEvents = async (req) => {
   return result;
 };
 
+const changeStatusEvents = async (req) => {
+  const { id } = req.params;
+  const { statusEvent } = req.body;
+
+  const checkEvent = await Events.findOne({
+    _id: id,
+  });
+
+  if (!checkEvent) {
+    throw new NotFoundError(`Tidak ada acara dengan id: ${id}`);
+  }
+
+  checkEvent.statusEvent = statusEvent;
+
+  await checkEvent.save();
+
+  return checkEvent;
+};
+
 module.exports = {
   getAllEvents,
   createEvents,
   getOneEvents,
   updateEvents,
   deleteEvents,
+  changeStatusEvents,
 };

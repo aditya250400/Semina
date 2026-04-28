@@ -1,15 +1,29 @@
 const express = require("express");
 const router = express();
 const { create, index, show, update, destroy } = require("./controller");
+const {
+  authenticateUser,
+  authorizeRoles,
+} = require("../../../middlewares/auth");
 
-router.get("/events", index);
+router.get("/events", authenticateUser, authorizeRoles("organizer"), index);
 
-router.get("/events/:id", show);
+router.get("/events/:id", authenticateUser, authorizeRoles("organizer"), show);
 
-router.put("/events/:id", update);
+router.put(
+  "/events/:id",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  update,
+);
 
-router.delete("/events/:id", destroy);
+router.delete(
+  "/events/:id",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  destroy,
+);
 
-router.post("/events", create);
+router.post("/events", authenticateUser, authorizeRoles("organizer"), create);
 
 module.exports = router;

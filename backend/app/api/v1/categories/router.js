@@ -8,12 +8,32 @@ const {
 
 router.get("/categories", authenticateUser, authorizeRoles("organizer"), index);
 
-router.get("/categories/:id", authenticateUser, show);
+router.get(
+  "/categories/:id",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  show,
+);
 
-router.put("/categories/:id", authenticateUser, update);
+router.put(
+  "/categories/:id",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  update,
+);
 
-router.delete("/categories/:id", authenticateUser, destroy);
+router.delete(
+  "/categories/:id",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  destroy,
+);
 
-router.post("/categories", authenticateUser, create);
+router.post(
+  "/categories",
+  authenticateUser,
+  authorizeRoles("organizer"),
+  create,
+);
 
 module.exports = router;

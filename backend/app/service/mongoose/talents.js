@@ -96,7 +96,7 @@ const deleteTalents = async (req) => {
 
   if (!result) throw new NotFound(`Pembicara tidak ditemukan`);
 
-  await result.remove();
+  await result.deleteOne();
 
   return result;
 };

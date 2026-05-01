@@ -149,17 +149,20 @@ const updateEvents = async (req) => {
     },
   );
 
-  if (!result) throw new NotFound("Acara tidak ditemukan");
+  if (!result) throw new NotFoundError("Acara tidak ditemukan");
 
   return result;
 };
 
 const deleteEvents = async (req) => {
   const { id } = req.params;
-  const result = await Events.findOne({ id, organizer: req.user.organizer });
+  const result = await Events.findOne({
+    _id: id,
+    organizer: req.user.organizer,
+  });
 
-  if (!result) throw new NotFound(`Acara tidak ditemukan`);
-  await result.remove();
+  if (!result) throw new NotFoundError(`Acara tidak ditemukan`);
+  await result.deleteOne();
 
   return result;
 };

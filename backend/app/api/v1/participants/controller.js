@@ -71,10 +71,13 @@ const getDashboard = async (req, res, next) => {
   try {
     const result = await getAllOrders(req);
 
-    res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.CREATED).json({
+      status: true,
+      message: "List data orders",
       data: result,
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
@@ -83,7 +86,9 @@ const getDetailLandingPage = async (req, res, next) => {
   try {
     const result = await getOneEvent(req);
 
-    res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.CREATED).json({
+      status: true,
+      message: "Detail event " + result.title,
       data: result,
     });
   } catch (err) {
@@ -99,4 +104,5 @@ module.exports = {
   getAllEvents,
   getAllLandingPage,
   getDetailLandingPage,
+  getDashboard,
 };

@@ -1,5 +1,6 @@
 const Participant = require("../../api/v1/participants/model");
 const Events = require("../../api/v1/events/model");
+const Orders = require("../../api/v1/orders/model");
 const {
   BadRequestError,
   NotFoundError,
@@ -119,7 +120,6 @@ const getOneEvent = async (req) => {
 };
 
 const getAllOrders = async (req) => {
-  console.log(req.participant);
   const result = await Orders.find({ participant: req.participant.id });
   return result;
 };

@@ -149,7 +149,8 @@ const updateEvents = async (req) => {
     },
   );
 
-  if (!result) throw new NotFoundError("Acara tidak ditemukan");
+  if (!result)
+    throw new NotFoundError("Acara dengan id " + id + " tidak ditemukan");
 
   return result;
 };

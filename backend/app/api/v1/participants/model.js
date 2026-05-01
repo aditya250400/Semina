@@ -39,12 +39,11 @@ const participantSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-participantSchema.pre("save", async function (next) {
+participantSchema.pre("save", async function () {
   const User = this;
   if (User.isModified("password")) {
     User.password = await bcrypt.hash(User.password, 12);
   }
-  next();
 });
 
 participantSchema.methods.comparePassword = async function (canditatePassword) {

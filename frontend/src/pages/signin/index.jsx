@@ -61,7 +61,7 @@ export default function Login() {
             <SButton
               loading={user.loading}
               disabled={user.loading}
-              variant="success"
+              variant="primary"
               className="w-100"
               type="submit"
             >

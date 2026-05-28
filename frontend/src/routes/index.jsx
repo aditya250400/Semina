@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../pages/signin";
 import CategoryIndex from "../pages/categories";
 import Dashboard from "../pages/Dashboard";

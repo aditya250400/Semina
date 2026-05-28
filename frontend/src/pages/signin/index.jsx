@@ -1,12 +1,8 @@
-import Form from "react-bootstrap/Form";
-import { Container, Card } from "react-bootstrap";
-import SButton from "../../components/Button";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TextInputWithLabel from "../../components/TextInputWithLabel";
 import { loginAsync } from "../../redux/users/userThunk";
-import SAlert from "../../components/Alert";
 import { useNavigate } from "react-router";
+import LayoutAuth from "../../layouts/auth";
 
 export default function Login() {
   const user = useSelector((state) => state.authUser);
@@ -28,51 +24,61 @@ export default function Login() {
     dispatch(loginAsync({ form, setForm, navigate }));
   };
   return (
-    <Container className="vh-100 d-flex align-items-center justify-content-center">
-      <Card className="w-50">
-        <Card.Title className="ms-3 mt-3">Login</Card.Title>
-        <Card.Subtitle className="mb-2 ms-3 text-muted">
-          Please fill your credentials
-        </Card.Subtitle>
-        <Card.Body>
+    <LayoutAuth>
+      <div className="text-center mb-4 mt-5">
+        <h2 className="mt-3">Semina</h2>
+      </div>
+      <div className="card card-md rounded">
+        <div className="card-body">
+          <h2 className="h2 text-center mb-4">Login to your account</h2>
           {user.errors && (
-            <SAlert
-              className="my-2"
-              message={user.errors.message}
-              type="danger"
-            />
+            <div className="alert alert-danger mt-2">{user.errors.message}</div>
           )}
+          <form onSubmit={onSubmit} autoComplete="off" noValidate>
+            <div className="mb-3">
+              <label className="form-label">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                placeholder="your@email.com"
+                autoComplete="off"
+              />
+            </div>
+            <div className="mb-2">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                value={user.password}
+                onChange={handleChange}
+                placeholder="Your password"
+                autoComplete="off"
+              />
+            </div>
 
-          <Form onSubmit={onSubmit}>
-            <TextInputWithLabel
-              label="Email Address"
-              onChange={handleChange}
-              type="email"
-              value={form.email}
-              name="email"
-              placeholder="Enter email"
-            />
-
-            <TextInputWithLabel
-              onChange={handleChange}
-              type="password"
-              value={form.password}
-              name="password"
-              label="Password"
-              placeholder="Password"
-            />
-            <SButton
-              loading={user.loading}
-              disabled={user.loading}
-              variant="primary"
-              className="w-100"
-              type="submit"
-            >
-              Submit
-            </SButton>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+            <div className="form-footer">
+              <button
+                disabled={user.loading}
+                type="submit"
+                className="btn btn-primary w-100 rounded"
+              >
+                {user.loading ? (
+                  <div
+                    className="spinner-border text-white"
+                    role="status"
+                  ></div>
+                ) : (
+                  "Sign in"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </LayoutAuth>
   );
 }

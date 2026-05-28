@@ -21,6 +21,7 @@ const authUserSlice = createSlice({
       state.loading = false;
       state.token = "";
       state.errors = null;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -28,17 +29,23 @@ const authUserSlice = createSlice({
       .addCase(loginAsync.pending, (state, action) => {
         state.status = "pending";
         state.loading = true;
+        state.user = null;
+        state.token = "";
+        state.errors = null;
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = "Success";
         state.loading = false;
         state.token = action.payload.token;
+        state.user = action.payload.user;
         state.errors = null;
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.status = "Rejected";
         state.loading = false;
         state.errors = action.payload;
+        state.user = null;
+        state.token = "";
       });
   },
 });

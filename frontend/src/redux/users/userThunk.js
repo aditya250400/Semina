@@ -16,6 +16,7 @@ const loginAsync = createAsyncThunk(
 
       return {
         token: response.data.data.token,
+        user: response.data.data.user,
       };
     } catch (e) {
       return rejectWithValue(e.response.data);

@@ -6,7 +6,7 @@ import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
 import CategoryCreate from "./CategoryCreate";
 
 export default function CategoryIndex() {
-  const { data: categories } = useSelector((state) => state.categories);
+  const { categories } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {

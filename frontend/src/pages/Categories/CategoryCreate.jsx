@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createCategoryAsync } from "../../redux/categories/categoryThunk";
 
 export default function CategoryCreate() {
-  const { errors, loadingCreate: loading } = useSelector(
-    (state) => state.categories,
-  );
+  const { errors, loading } = useSelector((state) => state.categories);
 
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -96,11 +94,11 @@ export default function CategoryCreate() {
                   Cancel
                 </a>
                 <button
-                  disabled={loading}
+                  disabled={loading.fetch}
                   type="submit"
                   className="btn btn-primary ms-auto rounded"
                 >
-                  {loading ? (
+                  {loading.fetch ? (
                     <div
                       className="spinner-border text-white"
                       role="status"

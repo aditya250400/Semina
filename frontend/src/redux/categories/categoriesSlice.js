@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const categoriesSlice = createSlice({
-  name: "user",
+  name: "categories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

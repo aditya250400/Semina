@@ -4,7 +4,12 @@ const { StatusCodes } = require("http-status-codes");
 const signinCms = async (req, res, next) => {
   try {
     const { token, result: user } = await signin(req);
+
     delete user._doc.password;
+    delete user._doc.createdAt;
+    delete user._doc.updatedAt;
+    delete user._doc.__v;
+
     res.status(StatusCodes.CREATED).json({
       status: true,
       message: "Login Berhasil",

@@ -1,14 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../redux/users/authUserSlice";
+import { changeTheme } from "../redux/theme/themeSlice";
 
 export default function Header() {
-  //   const { theme, changeTheme } = useThemeStore();
+  const { theme } = useSelector((state) => state.theme);
   const { user } = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const onChangeTheme = () => {
+    dispatch(changeTheme());
+  };
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -37,14 +42,14 @@ export default function Header() {
           </h1>
 
           <div className="navbar-nav flex-row order-md-last">
-            {/* <div className="d-flex me-2">
+            <div className="d-flex me-2">
               {theme === "dark" ? (
                 <button
                   className="nav-link px-0"
                   title="Enable light mode"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
-                  onClick={changeTheme}
+                  onClick={onChangeTheme}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -69,12 +74,26 @@ export default function Header() {
                   title="Enable dark mode"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
-                  onClick={changeTheme}
+                  onClick={onChangeTheme}
                 >
-                  <img src="/icons/dark.svg" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
                 </button>
               )}
-            </div> */}
+            </div>
             <div className="nav-item dropdown">
               <a
                 href="#"

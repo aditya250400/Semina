@@ -13,7 +13,8 @@ Api.interceptors.response.use(
     if (401 === error.response.status) {
       alert("Session is expired, please login again");
       Cookies.remove("token");
-      window.location = "/";
+      Cookies.remove("user");
+      window.location = "/login";
     } else {
       return Promise.reject(error);
     }
@@ -25,7 +26,7 @@ Api.interceptors.request.use(
     const token = Cookies.get("token");
 
     if (token) {
-      config.headers.Authorization = token;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },

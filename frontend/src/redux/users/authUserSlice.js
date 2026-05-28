@@ -4,7 +4,7 @@ import { loginAsync } from "./userThunk";
 import Cookies from "js-cookie";
 
 const initialState = {
-  user: null,
+  user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
   token: Cookies.get("token") || "",
   status: "idle",
   errors: null,
@@ -22,6 +22,8 @@ const authUserSlice = createSlice({
       state.token = "";
       state.errors = null;
       state.user = null;
+      Cookies.remove("token");
+      Cookies.remove("user");
     },
   },
   extraReducers: (builder) => {

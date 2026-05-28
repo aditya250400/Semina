@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 
 function SButton({
   children,
@@ -19,7 +19,11 @@ function SButton({
       size={size}
       {...props}
     >
-      {loading ? "Loading..." : children}
+      {loading ? (
+        <Spinner animation="border" variant="light" size="sm" />
+      ) : (
+        children
+      )}
     </Button>
   );
 }

@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import TextInputWithLabel from "../../components/TextInputWithLabel";
 import { loginAsync } from "../../redux/users/userThunk";
 import SAlert from "../../components/Alert";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const user = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -23,7 +25,7 @@ export default function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(loginAsync({ form, setForm }));
+    dispatch(loginAsync({ form, setForm, navigate }));
   };
   return (
     <Container className="vh-100 d-flex align-items-center justify-content-center">

@@ -5,14 +5,16 @@ import Cookies from "js-cookie";
 const loginAsync = createAsyncThunk(
   "auth/login",
 
-  async ({ form: credentials, setForm }, { rejectWithValue }) => {
+  async ({ form: credentials, setForm, navigate }, { rejectWithValue }) => {
     try {
-      const response = await Api.post("/auth/login", credentials);
+      const response = await Api.post("/cms/auth/login", credentials);
 
       Cookies.set("token", response.data.data.token);
+      Cookies.set("user", JSON.stringify(response.data.data.user));
       setForm({ email: "", password: "" });
 
       alert("login success");
+      navigate("/dashboard");
 
       return {
         token: response.data.data.token,

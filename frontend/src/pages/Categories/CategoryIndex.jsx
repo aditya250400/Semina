@@ -3,12 +3,11 @@ import { useEffect } from "react";
 import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
+import CategoryCreate from "./CategoryCreate";
 
 export default function CategoryIndex() {
-  const { categories } = useSelector((state) => state.categories);
+  const { data: categories } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
-
-  console.log(categories);
 
   useEffect(() => {
     dispatch(categoriesIndexAsync());
@@ -20,26 +19,24 @@ export default function CategoryIndex() {
           <div className="row g-2 align-items-center">
             <div className="col">
               <div className="page-title">Categories</div>
-              <h2 className="page-pretitle">Page</h2>
+              <h2 className="page-pretitle">Pagde</h2>
             </div>
           </div>
         </div>
       </div>
       <div className="page-body">
         <div className="container-xl">
+          <div className="d-flex mb-2 justify-content-end">
+            <CategoryCreate />
+          </div>
           <div className="row">
-            {/* <div className="col-12 mb-3">
-              <div className="input-group">
-                <CategoryCreate fetchData={fetchData} />
-                
-              </div>
-            </div> */}
             <div className="col-12">
               <div className="card">
                 <div className="table-responsive">
-                  <table className="table table-vcenter table-mobile-md card-table">
+                  <table className="table table-vcenter card-table">
                     <thead>
                       <tr>
+                        <th>No</th>
                         <th>Category Name</th>
                         <th className="w-1">Actions</th>
                       </tr>
@@ -47,7 +44,8 @@ export default function CategoryIndex() {
                     <tbody>
                       {categories.length > 0 ? (
                         categories.map((category, index) => (
-                          <tr key={index}>
+                          <tr key={category._id}>
+                            <td>{index + 1}</td>
                             <td data-label="Category Name">{category.name}</td>
 
                             <td>
@@ -68,7 +66,7 @@ export default function CategoryIndex() {
                       ) : (
                         <tr>
                           <td colSpan={4} className="text-center">
-                            <div className="alert alert-danger-mb-0">
+                            <div className="alert alert-danger mb-0">
                               Data Belum Tersedia
                             </div>
                           </td>

@@ -3,7 +3,9 @@ const { BadRequestError, NotFoundError } = require("../../errors");
 const NotFound = require("../../errors/not-found");
 
 const getAllCategories = async (req) => {
-  const result = await Categories.find({ organizer: req.user.organizer });
+  const result = await Categories.find({ organizer: req.user.organizer }).sort({
+    createdAt: -1,
+  });
 
   return result;
 };

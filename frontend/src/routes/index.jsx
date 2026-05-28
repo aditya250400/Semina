@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import Login from "../pages/signin";
-import CategoryIndex from "../pages/categories";
+import CategoryIndex from "../pages/Categories/CategoryIndex";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../pages/wrapper/ProtectedRoute";
 import LoggedInRoute from "../pages/wrapper/LoggedInRoute";

@@ -13,7 +13,6 @@ const loginAsync = createAsyncThunk(
       Cookies.set("user", JSON.stringify(response.data.data.user));
       setForm({ email: "", password: "" });
 
-      alert("login success");
       navigate("/dashboard");
 
       return {

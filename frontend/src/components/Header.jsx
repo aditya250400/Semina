@@ -2,10 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../redux/users/authUserSlice";
 import { changeTheme } from "../redux/theme/themeSlice";
+import hasRole, {
+  accessCategories,
+  accessTalents,
+  accessEvents,
+  accessParticipant,
+  accessPayments,
+  accessOrders,
+} from "../utils/roleAccess";
 
 export default function Header() {
   const { theme } = useSelector((state) => state.theme);
   const { user } = useSelector((state) => state.authUser);
+  const { role } = useSelector((state) => state.authUser.user);
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -153,193 +162,94 @@ export default function Header() {
                         <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                       </svg>
                     </span>
-                    <span className="nav-link-title">HOME</span>
+                    <span className="nav-link-title">Home</span>
                   </Link>
                 </li>
-                <li
-                  className={`nav-item dropdown ${location.pathname === "/categories" || location.pathname === "/events" || location.pathname === "/talents" ? "active" : ""}`}
-                >
-                  <a
-                    href="#"
-                    className="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside"
-                    role="button"
-                    aria-expanded="false"
+                {(hasRole({ roles: accessCategories.lihat, role }) ||
+                  hasRole({ roles: accessEvents.lihat, role }) ||
+                  hasRole({ roles: accessTalents.lihat, role })) && (
+                  <li
+                    className={`nav-item dropdown ${location.pathname === "/categories" || location.pathname === "/events" || location.pathname === "/talents" ? "active" : ""}`}
                   >
-                    <span className="nav-link-icon  d-lg-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon icon-tabler icons-tabler-outline icon-tabler-box"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                        <path d="M12 12l8 -4.5" />
-                        <path d="M12 12l0 9" />
-                        <path d="M12 12l-8 -4.5" />
-                      </svg>
-                    </span>
-                    <span className="nav-link-title">MASTER</span>
-                  </a>
-                  <div className="dropdown-menu">
-                    <Link
-                      className={`dropdown-item ${location.pathname === "/categories" ? "active" : ""} `}
-                      to="/categories"
+                    <a
+                      href="#"
+                      className="nav-link dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      data-bs-auto-close="outside"
+                      role="button"
+                      aria-expanded="false"
                     >
-                      Categories
-                    </Link>
-                    <Link
-                      className={`dropdown-item ${location.pathname === "/events" ? "active" : ""} `}
-                      to="/events"
-                    >
-                      Events
-                    </Link>
-                    <Link
-                      className={`dropdown-item ${location.pathname === "/talents" ? "active" : ""} `}
-                      to="/talents"
-                    >
-                      Talents
-                    </Link>
-                  </div>
-                </li>
-                {/* <li
-                  className={`nav-item ${location.pathname === "/customers" ? "active" : ""}`}
-                >
-                  <Link to="/customers" className="nav-link">
-                    <span className="nav-link-icon  d-lg-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon icon-tabler icons-tabler-outline icon-tabler-users"
+                      <span className="nav-link-icon  d-lg-inline-block">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="icon icon-tabler icons-tabler-outline icon-tabler-box"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                          <path d="M12 12l8 -4.5" />
+                          <path d="M12 12l0 9" />
+                          <path d="M12 12l-8 -4.5" />
+                        </svg>
+                      </span>
+                      <span className="nav-link-title">MASTER</span>
+                    </a>
+                    <div className="dropdown-menu">
+                      <Link
+                        className={`dropdown-item ${location.pathname === "/categories" ? "active" : ""} `}
+                        to="/categories"
                       >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                      </svg>
-                    </span>
-                    <span className="nav-link-title">CUSTOMERS</span>
-                  </Link>
-                </li>
-                <li
-                  className={`nav-item ${location.pathname === "/transactions" ? "active" : ""}`}
-                >
-                  <Link to="/transactions" className="nav-link">
-                    <span className="nav-link-icon  d-lg-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"
+                        Categories
+                      </Link>
+                      <Link
+                        className={`dropdown-item ${location.pathname === "/events" ? "active" : ""} `}
+                        to="/events"
                       >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                        <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                        <path d="M17 17h-11v-14h-2" />
-                        <path d="M6 5l14 1l-1 7h-13" />
-                      </svg>
-                    </span>
-                    <span className="nav-link-title">TRANSACTIONS</span>
-                  </Link>
-                </li>
-                <li
-                  className={`nav-item dropdown ${location.pathname === "/sales" || location.pathname === "/profits" ? "active" : ""}`}
-                >
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside"
-                    role="button"
-                    aria-expanded="false"
+                        Events
+                      </Link>
+                      <Link
+                        className={`dropdown-item ${location.pathname === "/talents" ? "active" : ""} `}
+                        to="/talents"
+                      >
+                        Talents
+                      </Link>
+                    </div>
+                  </li>
+                )}
+                {hasRole({ roles: accessPayments.lihat, role }) && (
+                  <li
+                    className={`nav-item ${location.pathname === "/payments" ? "active" : ""}`}
                   >
-                    <span className="nav-link-icon  d-lg-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M3 3v18h18" />
-                        <path d="M20 18v3" />
-                        <path d="M16 16v5" />
-                        <path d="M12 13v8" />
-                        <path d="M8 16v5" />
-                        <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
-                      </svg>
-                    </span>
-                    <span className="nav-link-title">REPORT</span>
-                  </a>
-                  <div className="dropdown-menu">
-                    <Link
-                      className={`dropdown-item ${location.pathname === "/sales" ? "active" : ""} `}
-                      to="/sales"
-                    >
-                      Sales
+                    <Link to="#" className="nav-link">
+                      <span className="nav-link-title">Payments</span>
                     </Link>
-                    <Link
-                      className={`dropdown-item ${location.pathname === "/profits" ? "active" : ""} `}
-                      to="/profits"
-                    >
-                      Profits
+                  </li>
+                )}
+                {hasRole({ roles: accessOrders.lihat, role }) && (
+                  <li
+                    className={`nav-item ${location.pathname === "/orders" ? "active" : ""}`}
+                  >
+                    <Link to="#" className="nav-link">
+                      <span className="nav-link-title">Orders</span>
                     </Link>
-                  </div>
-                </li>
-                <li
-                  className={`nav-item ${location.pathname === "/users" ? "active" : ""}`}
-                >
-                  <Link className="nav-link" to="/users">
-                    <span className="nav-link-icon  d-lg-inline-block">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="icon icon-tabler icons-tabler-outline icon-tabler-user-shield"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M6 21v-2a4 4 0 0 1 4 -4h2" />
-                        <path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5z" />
-                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                      </svg>
-                    </span>
-                    <span className="nav-link-title">USERS</span>
-                  </Link>
-                </li> */}
+                  </li>
+                )}
+                {hasRole({ roles: accessParticipant.lihat }) && (
+                  <li
+                    className={`nav-item ${location.pathname === "/participants" ? "active" : ""}`}
+                  >
+                    <Link to="#" className="nav-link">
+                      <span className="nav-link-title">Participants</span>
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

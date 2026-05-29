@@ -9,9 +9,11 @@ import {
 import CategoryCreate from "./CategoryCreate";
 import DeleteButton from "../../components/DeleteButton";
 import CategoryEdit from "./CategoryEdit";
+import hasRole, { accessCategories } from "../../utils/roleAccess";
 
 export default function CategoryIndex() {
   const { categories } = useSelector((state) => state.categories);
+  const { role } = useSelector((state) => state.authUser.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,9 +33,11 @@ export default function CategoryIndex() {
       </div>
       <div className="page-body">
         <div className="container-xl">
-          <div className="d-flex mb-2 justify-content-end">
-            <CategoryCreate />
-          </div>
+          {hasRole({ role, roles: accessCategories.tambah }) && (
+            <div className="d-flex mb-2 justify-content-end">
+              <CategoryCreate />
+            </div>
+          )}
           <div className="row">
             <div className="col-12">
               <div className="card">
@@ -55,16 +59,26 @@ export default function CategoryIndex() {
 
                             <td>
                               <div className="btn-list flex-nowrap">
-                                <CategoryEdit
-                                  id={category._id}
-                                  name={category.name}
-                                />
-                                <DeleteButton
-                                  onDelete={deleteCategoryAsync}
-                                  modalType={"category"}
-                                  name={category.name}
-                                  id={category._id}
-                                />
+                                {hasRole({
+                                  roles: accessCategories.edit,
+                                  role,
+                                }) && (
+                                  <CategoryEdit
+                                    id={category._id}
+                                    name={category.name}
+                                  />
+                                )}
+                                {hasRole({
+                                  roles: accessCategories.hapus,
+                                  role,
+                                }) && (
+                                  <DeleteButton
+                                    onDelete={deleteCategoryAsync}
+                                    modalType={"category"}
+                                    name={category.name}
+                                    id={category._id}
+                                  />
+                                )}
                               </div>
                             </td>
                           </tr>

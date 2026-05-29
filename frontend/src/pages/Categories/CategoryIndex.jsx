@@ -8,6 +8,7 @@ import {
 } from "../../redux/categories/categoryThunk";
 import CategoryCreate from "./CategoryCreate";
 import DeleteButton from "../../components/DeleteButton";
+import CategoryEdit from "./CategoryEdit";
 
 export default function CategoryIndex() {
   const { categories } = useSelector((state) => state.categories);
@@ -54,10 +55,10 @@ export default function CategoryIndex() {
 
                             <td>
                               <div className="btn-list flex-nowrap">
-                                {/* <CategoryEdit
-                                  categoryId={category.id}
-                                  fetchData={fetchData}
-                                /> */}
+                                <CategoryEdit
+                                  id={category._id}
+                                  name={category.name}
+                                />
                                 <DeleteButton
                                   onDelete={deleteCategoryAsync}
                                   modalType={"category"}

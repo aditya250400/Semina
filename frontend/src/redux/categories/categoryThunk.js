@@ -94,7 +94,7 @@ const updateCategoryAsync = createAsyncThunk(
 
 const deleteCategoryAsync = createAsyncThunk(
   "categories/delete",
-  async ({ toast, dispatch, id }, { rejectWithValue }) => {
+  async ({ toast, dispatch, id, modalRef }, { rejectWithValue }) => {
     try {
       const response = await Api.delete(`/cms/categories/${id}`);
 
@@ -107,6 +107,12 @@ const deleteCategoryAsync = createAsyncThunk(
           color: "#fff",
         },
       });
+
+      const modalElement = modalRef.current;
+
+      // eslint-disable-next-line no-undef
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
 
       dispatch(categoriesIndexAsync());
     } catch (e) {

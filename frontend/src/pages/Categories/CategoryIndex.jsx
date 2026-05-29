@@ -2,8 +2,12 @@
 import { useEffect } from "react";
 import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
-import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
+import {
+  categoriesIndexAsync,
+  deleteCategoryAsync,
+} from "../../redux/categories/categoryThunk";
 import CategoryCreate from "./CategoryCreate";
+import DeleteButton from "../../components/DeleteButton";
 
 export default function CategoryIndex() {
   const { categories } = useSelector((state) => state.categories);
@@ -19,7 +23,7 @@ export default function CategoryIndex() {
           <div className="row g-2 align-items-center">
             <div className="col">
               <div className="page-title">Categories</div>
-              <h2 className="page-pretitle">Pagde</h2>
+              <h2 className="page-pretitle">Page</h2>
             </div>
           </div>
         </div>
@@ -49,17 +53,18 @@ export default function CategoryIndex() {
                             <td data-label="Category Name">{category.name}</td>
 
                             <td>
-                              {/* <div className="btn-list flex-nowrap">
-                                <CategoryEdit
+                              <div className="btn-list flex-nowrap">
+                                {/* <CategoryEdit
                                   categoryId={category.id}
                                   fetchData={fetchData}
-                                />
+                                /> */}
                                 <DeleteButton
-                                  id={category.id}
-                                  endpoint="/categories"
-                                  fetchData={fetchData}
+                                  onDelete={deleteCategoryAsync}
+                                  modalType={"category"}
+                                  name={category.name}
+                                  id={category._id}
                                 />
-                              </div> */}
+                              </div>
                             </td>
                           </tr>
                         ))

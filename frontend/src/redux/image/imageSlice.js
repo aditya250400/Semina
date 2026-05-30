@@ -15,7 +15,7 @@ const imageSlice = createSlice({
   initialState,
   reducers: {
     imageReset: (state, action) => {
-      state.status = "pending";
+      state.status = "idle";
       state.loading = false;
       state.errors = null;
       state.image = "";

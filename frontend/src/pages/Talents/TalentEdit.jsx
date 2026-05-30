@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { createTalentsAsync } from "../../redux/talents/talentsThunk";
+import { updateTalentAsync } from "../../redux/talents/talentsThunk";
 import { postImageAsync } from "../../redux/image/imageThunk";
+import { imageReset } from "../../redux/image/imageSlice";
 
-export default function TalentCreate() {
+export default function TalentEdit({ id, name, role, image }) {
   const { errors, loading } = useSelector((state) => state.talents);
   const { image: avatar, loading: loadingImage } = useSelector(
     (state) => state.image,
@@ -13,9 +14,9 @@ export default function TalentCreate() {
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    name: "",
-    role: "",
-    image: "",
+    name: name ?? "",
+    role: role ?? "",
+    image: image._id ?? "",
   });
 
   const onChangeHandler = (e) => {
@@ -83,13 +84,14 @@ export default function TalentCreate() {
     e.preventDefault();
 
     dispatch(
-      createTalentsAsync({
+      updateTalentAsync({
         form,
         toast,
         setForm,
         modalRef,
         dispatch,
         fileInputRef,
+        id,
       }),
     );
   };
@@ -100,29 +102,30 @@ export default function TalentCreate() {
         href="#"
         className="btn btn-primary d-sm-inline-block"
         data-bs-toggle="modal"
-        data-bs-target="#modal-create-category"
+        data-bs-target={`#modal-update-talent-${id}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="icon"
           width="24"
           height="24"
           viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
           fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="icon icon-tabler icons-tabler-outline icon-tabler-edit"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M12 5l0 14" />
-          <path d="M5 12l14 0" />
+          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" />
+          <path d="M16 5l3 3" />
         </svg>
-        Add New
+        Edit
       </a>
       <div
         className="modal modal-blur fade "
-        id="modal-create-category"
+        id={`modal-update-talent-${id}`}
         tabIndex={-1}
         role="dialog"
         aria-hidden="true"
@@ -135,12 +138,13 @@ export default function TalentCreate() {
           <form onSubmit={storeTalent} className="container-xl">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">New Talent</h5>
+                <h5 className="modal-title">Edit Talent</h5>
                 <button
                   type="button"
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  onClick={() => dispatch(imageReset())}
                 ></button>
               </div>
               <div className="modal-body">
@@ -191,15 +195,16 @@ export default function TalentCreate() {
                             backgroundColor: avatar ? "transparent" : "#e9ecef",
                             backgroundImage: avatar
                               ? `url(${import.meta.env.VITE_APP_IMAGEBASEURL}/${avatar.name})`
-                              : "none",
+                              : `url(${import.meta.env.VITE_APP_IMAGEBASEURL}/${image.name})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                           }}
                         >
-                          {!avatar && (
-                            <span className="text-muted">Preview Image</span>
-                          )}
+                          {!avatar ||
+                            (!image && (
+                              <span className="text-muted">Preview Image</span>
+                            ))}
                         </div>
                       </div>
                       <div className="mb-3 col-6 col-md-9 ms-3">
@@ -222,15 +227,16 @@ export default function TalentCreate() {
                   className="btn me-auto rounded"
                   data-bs-dismiss="modal"
                   href="#"
+                  onClick={() => dispatch(imageReset())}
                 >
                   Cancel
                 </a>
                 <button
-                  disabled={loading.create || loadingImage}
+                  disabled={loading.update || loadingImage}
                   type="submit"
                   className="btn btn-primary ms-auto rounded"
                 >
-                  {loading.create ? (
+                  {loading.update ? (
                     <div
                       className="spinner-border text-white"
                       role="status"

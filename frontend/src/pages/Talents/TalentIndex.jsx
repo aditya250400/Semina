@@ -9,6 +9,7 @@ import {
 } from "../../redux/talents/talentsThunk";
 import TalentCreate from "./TalentCreate";
 import DeleteButton from "../../components/DeleteButton";
+import TalentEdit from "./TalentEdit";
 
 export default function TalentIndex() {
   const { talents, loading } = useSelector((state) => state.talents);
@@ -104,15 +105,17 @@ export default function TalentIndex() {
 
                             <td>
                               <div className="btn-list flex-nowrap">
-                                {/* {hasRole({
+                                {hasRole({
                                   roles: accessTalents.edit,
                                   role,
                                 }) && (
-                                  <CategoryEdit
-                                    id={category._id}
-                                    name={category.name}
+                                  <TalentEdit
+                                    id={talent._id}
+                                    name={talent.name}
+                                    role={talent.role}
+                                    image={talent.image}
                                   />
-                                )} */}
+                                )}
                                 {hasRole({
                                   roles: accessTalents.hapus,
                                   role,
@@ -126,7 +129,6 @@ export default function TalentIndex() {
                                   />
                                 )}
                               </div>
-                              Aksi
                             </td>
                           </tr>
                         ))

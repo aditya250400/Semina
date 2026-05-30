@@ -4,6 +4,7 @@ import categoriesReducer from "./categories/categoriesSlice";
 import themeReducer from "./theme/themeSlice";
 import talentsReducer from "./talents/talentsSlice";
 import imageReducer from "./image/imageSlice";
+import paymentReducer from "./payments/paymentsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     theme: themeReducer,
     talents: talentsReducer,
     image: imageReducer,
+    payments: paymentReducer,
   },
 });

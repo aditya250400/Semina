@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
 import hasRole, { accessTalents } from "../../utils/roleAccess";
-import { indexTalentsAsync } from "../../redux/talents/talentsThunk";
+import {
+  deleteTalentAsync,
+  indexTalentsAsync,
+} from "../../redux/talents/talentsThunk";
 import TalentCreate from "./TalentCreate";
+import DeleteButton from "../../components/DeleteButton";
 
 export default function TalentIndex() {
-  const { talents } = useSelector((state) => state.talents);
+  const { talents, loading } = useSelector((state) => state.talents);
   const { role } = useSelector((state) => state.authUser.user);
   const [keyword, setKeyword] = useState("");
   const dispatch = useDispatch();
@@ -99,8 +103,8 @@ export default function TalentIndex() {
                             </td>
 
                             <td>
-                              {/* <div className="btn-list flex-nowrap">
-                                {hasRole({
+                              <div className="btn-list flex-nowrap">
+                                {/* {hasRole({
                                   roles: accessTalents.edit,
                                   role,
                                 }) && (
@@ -108,19 +112,20 @@ export default function TalentIndex() {
                                     id={category._id}
                                     name={category.name}
                                   />
-                                )}
+                                )} */}
                                 {hasRole({
-                                  roles: accesstalents.hapus,
+                                  roles: accessTalents.hapus,
                                   role,
                                 }) && (
                                   <DeleteButton
-                                    onDelete={deleteCategoryAsync}
-                                    modalType={"category"}
-                                    name={category.name}
-                                    id={category._id}
+                                    onDelete={deleteTalentAsync}
+                                    modalType={"talent"}
+                                    name={talent.name}
+                                    id={talent._id}
+                                    loading={loading}
                                   />
                                 )}
-                              </div> */}
+                              </div>
                               Aksi
                             </td>
                           </tr>

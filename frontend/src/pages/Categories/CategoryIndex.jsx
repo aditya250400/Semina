@@ -12,7 +12,7 @@ import CategoryEdit from "./CategoryEdit";
 import hasRole, { accessCategories } from "../../utils/roleAccess";
 
 export default function CategoryIndex() {
-  const { categories } = useSelector((state) => state.categories);
+  const { categories, loading } = useSelector((state) => state.categories);
   const { role } = useSelector((state) => state.authUser.user);
   const dispatch = useDispatch();
 
@@ -77,6 +77,7 @@ export default function CategoryIndex() {
                                     modalType={"category"}
                                     name={category.name}
                                     id={category._id}
+                                    loading={loading}
                                   />
                                 )}
                               </div>

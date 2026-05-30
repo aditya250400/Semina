@@ -1,9 +1,14 @@
 import { useRef } from "react";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-export default function DeleteButton({ modalType, id, onDelete, name }) {
-  const { loading } = useSelector((state) => state.categories);
+export default function DeleteButton({
+  modalType,
+  id,
+  onDelete,
+  name,
+  loading,
+}) {
   const dispatch = useDispatch();
   const modalRef = useRef(null);
 

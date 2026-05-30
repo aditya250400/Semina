@@ -23,8 +23,8 @@ const getAllTalents = async (req) => {
       path: "image",
       select: "_id name",
     })
-    .select("_id name role image");
-
+    .select("_id name role image createdAt")
+    .sort({ createdAt: -1 });
   return result;
 };
 
@@ -93,7 +93,10 @@ const updateTalents = async (req) => {
 
 const deleteTalents = async (req) => {
   const { id } = req.params;
-  const result = await Talents.findOne({ id, organizer: req.user.organizer });
+  const result = await Talents.findOne({
+    _id: id,
+    organizer: req.user.organizer,
+  });
 
   if (!result) throw new NotFound(`Pembicara tidak ditemukan`);
 

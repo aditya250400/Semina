@@ -39,7 +39,6 @@ const imageSlice = createSlice({
         state.status = "Rejected";
         state.loading = false;
         state.errors = action.payload;
-        console.log(action.payload);
         state.image = "";
       });
   },

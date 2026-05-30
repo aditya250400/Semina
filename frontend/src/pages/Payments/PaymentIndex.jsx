@@ -80,8 +80,7 @@ export default function PaymentIndex() {
                                 }) && (
                                   <PaymentEdit
                                     id={payment._id}
-                                    name={payment.name}
-                                    role={payment.role}
+                                    type={payment.type}
                                     image={payment.image}
                                   />
                                 )}
@@ -92,7 +91,7 @@ export default function PaymentIndex() {
                                   <DeleteButton
                                     onDelete={deletePaymentAsync}
                                     modalType={"payment"}
-                                    name={payment.name}
+                                    name={payment.type}
                                     id={payment._id}
                                     loading={loading}
                                   />

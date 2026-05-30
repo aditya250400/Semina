@@ -2,20 +2,19 @@ import { useState } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTalentAsync } from "../../redux/talents/talentsThunk";
 import { postImageAsync } from "../../redux/image/imageThunk";
 import { imageReset } from "../../redux/image/imageSlice";
+import { updatePaymentAsync } from "../../redux/payments/paymentsThunk";
 
-export default function PaymentEdit({ id, name, role, image }) {
-  const { errors, loading } = useSelector((state) => state.talents);
+export default function PaymentEdit({ id, type, image }) {
+  const { errors, loading } = useSelector((state) => state.payments);
   const { image: avatar, loading: loadingImage } = useSelector(
     (state) => state.image,
   );
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    name: name ?? "",
-    role: role ?? "",
+    type: type ?? "",
     image: image._id ?? "",
   });
 
@@ -26,6 +25,11 @@ export default function PaymentEdit({ id, name, role, image }) {
   const modalRef = useRef(null);
 
   const fileInputRef = useRef(null);
+
+  const resetImageHandler = () => {
+    dispatch(imageReset());
+    fileInputRef.current.value = "";
+  };
 
   const handleFileChange = (e) => {
     const imageData = e.target.files[0];
@@ -80,11 +84,11 @@ export default function PaymentEdit({ id, name, role, image }) {
     );
   };
 
-  const storeTalent = (e) => {
+  const updatePayment = (e) => {
     e.preventDefault();
 
     dispatch(
-      updateTalentAsync({
+      updatePaymentAsync({
         form,
         toast,
         setForm,
@@ -102,7 +106,7 @@ export default function PaymentEdit({ id, name, role, image }) {
         href="#"
         className="btn btn-primary d-sm-inline-block"
         data-bs-toggle="modal"
-        data-bs-target={`#modal-update-talent-${id}`}
+        data-bs-target={`#modal-update-payment-${id}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +129,7 @@ export default function PaymentEdit({ id, name, role, image }) {
       </a>
       <div
         className="modal modal-blur fade "
-        id={`modal-update-talent-${id}`}
+        id={`modal-update-payment-${id}`}
         tabIndex={-1}
         role="dialog"
         aria-hidden="true"
@@ -135,16 +139,16 @@ export default function PaymentEdit({ id, name, role, image }) {
           className="modal-dialog modal-lg modal-dialog-centered"
           role="document"
         >
-          <form onSubmit={storeTalent} className="container-xl">
+          <form onSubmit={updatePayment} className="container-xl">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Edit Talent</h5>
+                <h5 className="modal-title">Edit Payment</h5>
                 <button
                   type="button"
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                  onClick={() => dispatch(imageReset())}
+                  onClick={resetImageHandler}
                 ></button>
               </div>
               <div className="modal-body">
@@ -158,27 +162,14 @@ export default function PaymentEdit({ id, name, role, image }) {
                   </div>
                   <div className="col-lg-12">
                     <div className="mb-3">
-                      <label className="form-label">Talent Name</label>
+                      <label className="form-label">Payment Method Name</label>
                       <input
                         type="text"
                         className="form-control"
                         onChange={onChangeHandler}
-                        name="name"
-                        value={form.name}
-                        placeholder="Enter Talent Name"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className="mb-3">
-                      <label className="form-label">Role</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        onChange={onChangeHandler}
-                        value={form.role}
-                        name="role"
-                        placeholder="Enter Talent role"
+                        name="type"
+                        value={form.type}
+                        placeholder="Enter Payment Method Name"
                       />
                     </div>
                   </div>
@@ -227,7 +218,7 @@ export default function PaymentEdit({ id, name, role, image }) {
                   className="btn me-auto rounded"
                   data-bs-dismiss="modal"
                   href="#"
-                  onClick={() => dispatch(imageReset())}
+                  onClick={resetImageHandler}
                 >
                   Cancel
                 </a>

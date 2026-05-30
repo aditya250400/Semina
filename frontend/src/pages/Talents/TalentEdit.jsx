@@ -27,6 +27,11 @@ export default function TalentEdit({ id, name, role, image }) {
 
   const fileInputRef = useRef(null);
 
+  const resetImageHandler = () => {
+    dispatch(imageReset());
+    fileInputRef.current.value = "";
+  };
+
   const handleFileChange = (e) => {
     const imageData = e.target.files[0];
 
@@ -144,7 +149,7 @@ export default function TalentEdit({ id, name, role, image }) {
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                  onClick={() => dispatch(imageReset())}
+                  onClick={resetImageHandler}
                 ></button>
               </div>
               <div className="modal-body">
@@ -227,7 +232,7 @@ export default function TalentEdit({ id, name, role, image }) {
                   className="btn me-auto rounded"
                   data-bs-dismiss="modal"
                   href="#"
-                  onClick={() => dispatch(imageReset())}
+                  onClick={resetImageHandler}
                 >
                   Cancel
                 </a>

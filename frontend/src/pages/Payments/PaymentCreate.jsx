@@ -87,6 +87,7 @@ export default function PaymentCreate() {
         toast,
         dispatch,
         fileInputRef,
+        modalRef,
       }),
     );
   };
@@ -97,7 +98,7 @@ export default function PaymentCreate() {
         href="#"
         className="btn btn-primary d-sm-inline-block"
         data-bs-toggle="modal"
-        data-bs-target="#modal-create-category"
+        data-bs-target="#modal-create-payment"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +120,7 @@ export default function PaymentCreate() {
       </a>
       <div
         className="modal modal-blur fade "
-        id="modal-create-category"
+        id="modal-create-payment"
         tabIndex={-1}
         role="dialog"
         aria-hidden="true"
@@ -188,7 +189,7 @@ export default function PaymentCreate() {
                         </div>
                       </div>
                       <div className="mb-3 col-6 col-md-9 ms-3">
-                        <label className="form-label">paymentIcon</label>
+                        <label className="form-label">Payment Icon</label>
                         <input
                           type="file"
                           disabled={loadingImage}

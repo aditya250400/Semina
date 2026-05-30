@@ -92,6 +92,7 @@ const updateTalentAsync = createAsyncThunk(
 
       setForm({ name: "", image: "", role: "" });
       dispatch(indexTalentsAsync());
+      dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
     }

@@ -39,6 +39,9 @@ const createPaymentAsync = createAsyncThunk(
     try {
       const response = await Api.post("/cms/payments", form);
 
+      dispatch(indexPaymentsAsync());
+      dispatch(imageReset());
+
       toast.success(`${response.data.message}`, {
         duration: 4000,
         position: "top-right",
@@ -57,8 +60,6 @@ const createPaymentAsync = createAsyncThunk(
 
       setForm({ type: "", image: "" });
       fileInputRef.current.value = "";
-      dispatch(indexPaymentsAsync());
-      dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
     }
@@ -92,6 +93,7 @@ const updatePaymentAsync = createAsyncThunk(
 
       setForm({ type: "", image: "" });
       dispatch(indexPaymentsAsync());
+      dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
     }

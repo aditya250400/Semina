@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
-import CategoryCreate from "../categories/CategoryCreate";
 import hasRole, { accessTalents } from "../../utils/roleAccess";
 import { indexTalentsAsync } from "../../redux/talents/talentsThunk";
+import TalentCreate from "./TalentCreate";
 
 export default function TalentIndex() {
   const { talents } = useSelector((state) => state.talents);
@@ -43,7 +43,7 @@ export default function TalentIndex() {
             <div className="col-12 mb-3">
               <div className="input-group">
                 {hasRole({ role, roles: accessTalents.tambah }) && (
-                  <CategoryCreate />
+                  <TalentCreate />
                 )}
                 <input
                   type="text"
@@ -94,7 +94,9 @@ export default function TalentIndex() {
                                 </div>
                               </div>
                             </td>
-                            <td data-label="Role">{talent.role}</td>
+                            <td data-label="Role">
+                              {talent.role || "Tidak ada Role"}
+                            </td>
 
                             <td>
                               {/* <div className="btn-list flex-nowrap">

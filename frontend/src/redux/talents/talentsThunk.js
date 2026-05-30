@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../utils/fetch";
+import { imageReset } from "../image/imageSlice";
 
 const indexTalentsAsync = createAsyncThunk(
   "talents/index",
@@ -31,7 +32,10 @@ const showTalentAsync = createAsyncThunk(
 
 const createTalentsAsync = createAsyncThunk(
   "talents/create",
-  async ({ toast, setForm, form, modalRef, dispatch }, { rejectWithValue }) => {
+  async (
+    { toast, setForm, form, modalRef, dispatch, fileInputRef },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await Api.post("/cms/talents", form);
 
@@ -51,8 +55,10 @@ const createTalentsAsync = createAsyncThunk(
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
 
-      setForm("");
+      setForm({ name: "", image: "", role: "" });
+      fileInputRef.current.value = "";
       dispatch(indexTalentsAsync());
+      dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
     }

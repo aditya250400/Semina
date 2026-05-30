@@ -31,6 +31,7 @@ const getAllTalents = async (req) => {
 const createTalents = async (req) => {
   const { name, role, image } = req.body;
 
+  if (!image) throw new BadRequestError("Avatar harus diisi");
   await checkingImage(image);
 
   const check = await Talents.findOne({ name, organizer: req.user.organizer });

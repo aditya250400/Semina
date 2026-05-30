@@ -32,6 +32,12 @@ export default function OrderIndex() {
     dispatch(indexOrdersAsync({ startDate, endDate, page: 1 }));
   };
 
+  const onReset = () => {
+    dispatch(resetOrders());
+    setStartDate("");
+    setEndDate("");
+  };
+
   useEffect(() => {
     dispatch(resetOrders());
   }, []);
@@ -124,7 +130,7 @@ export default function OrderIndex() {
                               <button
                                 className="btn btn-md btn-danger border-0 shadow w-100 rounded"
                                 disabled={loading.fetch}
-                                onClick={() => dispatch(resetOrders())}
+                                onClick={() => onReset()}
                               >
                                 {loading.fetch ? (
                                   <div

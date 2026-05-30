@@ -10,7 +10,7 @@ const index = async (req, res, next) => {
       status: true,
       message: "List Orders",
       data: {
-        order: result.data,
+        orders: result.data,
         total_pages: result.total_pages,
         total: result.total,
       },

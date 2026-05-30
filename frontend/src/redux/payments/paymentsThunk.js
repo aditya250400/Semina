@@ -65,7 +65,7 @@ const createPaymentAsync = createAsyncThunk(
   },
 );
 
-const updateTalentAsync = createAsyncThunk(
+const updatePaymentAsync = createAsyncThunk(
   "payments/update",
   async (
     { toast, setForm, form, modalRef, dispatch, id },
@@ -98,7 +98,7 @@ const updateTalentAsync = createAsyncThunk(
   },
 );
 
-const deleteTalentAsync = createAsyncThunk(
+const deletePaymentAsync = createAsyncThunk(
   "payments/delete",
   async ({ toast, dispatch, id, modalRef }, { rejectWithValue }) => {
     try {
@@ -130,7 +130,7 @@ const deleteTalentAsync = createAsyncThunk(
 export {
   indexPaymentsAsync,
   createPaymentAsync,
-  updateTalentAsync,
+  updatePaymentAsync,
   showPaymentAsync,
-  deleteTalentAsync,
+  deletePaymentAsync,
 };

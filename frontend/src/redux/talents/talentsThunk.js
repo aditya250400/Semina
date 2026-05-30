@@ -90,7 +90,7 @@ const updateTalentAsync = createAsyncThunk(
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
 
-      setForm("");
+      setForm({ name: "", image: "", role: "" });
       dispatch(indexTalentsAsync());
     } catch (e) {
       return rejectWithValue(e.response.data);

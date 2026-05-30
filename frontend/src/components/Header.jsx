@@ -227,7 +227,7 @@ export default function Header() {
                   <li
                     className={`nav-item ${location.pathname === "/payments" ? "active" : ""}`}
                   >
-                    <Link to="#" className="nav-link">
+                    <Link to="/payments" className="nav-link">
                       <span className="nav-link-icon  d-lg-inline-block">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

@@ -19,7 +19,6 @@ const createImage = async (req) => {
 
 const checkingImage = async (id) => {
   const result = await Images.findOne({ _id: id });
-  console.log(result);
 
   if (!result) throw new NotFoundError("Gambar tidak ditemukan");
 

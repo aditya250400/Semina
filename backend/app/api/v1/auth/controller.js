@@ -13,7 +13,7 @@ const signinCms = async (req, res, next) => {
     res.status(StatusCodes.CREATED).json({
       status: true,
       message: "Login Berhasil",
-      data: { token, user },
+      data: { token, user, role: user.role },
     });
   } catch (e) {
     next(e);

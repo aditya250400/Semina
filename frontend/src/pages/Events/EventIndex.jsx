@@ -174,7 +174,6 @@ export default function EventIndex() {
                                     <>Change Status</>
                                   )}
                                 </button>
-                                <button className="btn btn-info">Detail</button>
                                 {hasRole({
                                   roles: accessEvents.edit,
                                   role,

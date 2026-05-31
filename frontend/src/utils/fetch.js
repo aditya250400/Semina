@@ -15,6 +15,11 @@ Api.interceptors.response.use(
       Cookies.remove("token");
       Cookies.remove("user");
       window.location = "/login";
+    } else if (403 === error.response.status) {
+      alert(
+        "You not have right to access this page. You will reddirecting to home page",
+      );
+      window.location = "/";
     } else {
       return Promise.reject(error);
     }

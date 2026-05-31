@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import hasRole, { accessEvents } from "../../utils/roleAccess";
 import DeleteButton from "../../components/DeleteButton";
 import {
+  changeStatusEventAsync,
   deleteEventAsync,
   indexEventsAsync,
 } from "../../redux/events/eventsThunk";
@@ -14,12 +15,14 @@ import FilterEvent from "./FilterEvent";
 import { indexTalentsAsync } from "../../redux/talents/talentsThunk";
 import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
 import EventEdit from "./EventEdit";
+import toast from "react-hot-toast";
 
 export default function EventIndex() {
   const { events, loading } = useSelector((state) => state.events);
   const { categories } = useSelector((state) => state.categories);
   const { talents } = useSelector((state) => state.talents);
   const { role } = useSelector((state) => state.authUser.user);
+  const [loadingId, setLoadingId] = useState(null);
   const [filter, setFilter] = useState({
     keyword: "",
     talent: "",
@@ -146,8 +149,30 @@ export default function EventIndex() {
 
                             <td>
                               <div className="btn-list flex-nowrap">
-                                <button className="btn btn-secondary">
-                                  Change Status
+                                <button
+                                  disabled={loadingId == event._id}
+                                  type="button"
+                                  className="btn btn-secondary "
+                                  onClick={() => {
+                                    setLoadingId(event._id);
+                                    dispatch(
+                                      changeStatusEventAsync({
+                                        id: event._id,
+                                        dispatch,
+                                        toast,
+                                        setLoadingId,
+                                      }),
+                                    );
+                                  }}
+                                >
+                                  {loadingId == event._id ? (
+                                    <div
+                                      className="spinner-border text-white"
+                                      role="status"
+                                    ></div>
+                                  ) : (
+                                    <>Change Status</>
+                                  )}
                                 </button>
                                 <button className="btn btn-info">Detail</button>
                                 {hasRole({

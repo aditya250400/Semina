@@ -151,10 +151,42 @@ const deleteEventAsync = createAsyncThunk(
   },
 );
 
+const changeStatusEventAsync = createAsyncThunk(
+  "events/status",
+  async ({ toast, dispatch, id, setLoadingId }, { rejectWithValue }) => {
+    try {
+      const response = await Api.put(`/cms/events/${id}/status`, {});
+
+      toast.success(`${response.data.message}`, {
+        duration: 4000,
+        position: "top-right",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+
+      dispatch(
+        indexEventsAsync({
+          keyword: "",
+          talent: "",
+          status: "",
+          category: "",
+        }),
+      );
+      setLoadingId(null);
+    } catch (e) {
+      return rejectWithValue(e.response.data);
+    }
+  },
+);
+
 export {
   indexEventsAsync,
   createEventAsync,
   updateEventAsync,
   showEventAsync,
   deleteEventAsync,
+  changeStatusEventAsync,
 };

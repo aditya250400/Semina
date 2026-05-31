@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
+  changeStatusEventAsync,
   createEventAsync,
   deleteEventAsync,
   indexEventsAsync,
@@ -20,6 +21,7 @@ const initialState = {
     create: false,
     update: false,
     delete: false,
+    status: false,
   },
 };
 
@@ -116,6 +118,22 @@ const eventsSlice = createSlice({
         state.errors = action.payload;
         state.status = "success";
         state.event = null;
+      })
+      //status
+      .addCase(changeStatusEventAsync.pending, (state, action) => {
+        state.loading.status = true;
+        state.status = "pending";
+        state.errors = null;
+      })
+      .addCase(changeStatusEventAsync.fulfilled, (state, action) => {
+        state.loading.status = false;
+        state.status = "success";
+        state.errors = null;
+      })
+      .addCase(changeStatusEventAsync.rejected, (state, action) => {
+        state.loading.status = false;
+        state.errors = action.payload;
+        state.status = "success";
       });
   },
 });

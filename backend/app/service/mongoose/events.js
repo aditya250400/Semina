@@ -170,7 +170,6 @@ const deleteEvents = async (req) => {
 
 const changeStatusEvents = async (req) => {
   const { id } = req.params;
-  const { statusEvent } = req.body;
 
   const checkEvent = await Events.findOne({
     _id: id,
@@ -180,7 +179,8 @@ const changeStatusEvents = async (req) => {
     throw new NotFoundError(`Tidak ada acara dengan id: ${id}`);
   }
 
-  checkEvent.statusEvent = statusEvent;
+  checkEvent.statusEvent =
+    checkEvent.statusEvent == "Draft" ? "Published" : "Draft";
 
   await checkEvent.save();
 

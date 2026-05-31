@@ -35,11 +35,19 @@ const showEventAsync = createAsyncThunk(
 const createEventAsync = createAsyncThunk(
   "events/create",
   async (
-    { toast, setForm, form, modalRef, dispatch, fileInputRef },
+    { toast, resetForm, form, modalRef, dispatch, fileInputRef },
     { rejectWithValue },
   ) => {
     try {
       const response = await Api.post("/cms/events", form);
+      dispatch(
+        indexEventsAsync({
+          keyword: "",
+          talent: "",
+          status: "",
+          category: "",
+        }),
+      );
 
       toast.success(`${response.data.message}`, {
         duration: 4000,
@@ -57,9 +65,8 @@ const createEventAsync = createAsyncThunk(
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
 
-      setForm({ name: "", image: "", role: "" });
+      resetForm();
       fileInputRef.current.value = "";
-      dispatch(indexEventsAsync());
       dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
@@ -93,7 +100,14 @@ const updateEventAsync = createAsyncThunk(
       modalInstance.hide();
 
       setForm({ name: "", image: "", role: "" });
-      dispatch(indexEventsAsync());
+      dispatch(
+        indexEventsAsync({
+          keyword: "",
+          talent: "",
+          status: "",
+          category: "",
+        }),
+      );
       dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);
@@ -123,7 +137,14 @@ const deleteEventAsync = createAsyncThunk(
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
 
-      dispatch(indexEventsAsync());
+      dispatch(
+        indexEventsAsync({
+          keyword: "",
+          talent: "",
+          status: "",
+          category: "",
+        }),
+      );
     } catch (e) {
       return rejectWithValue(e.response.data);
     }

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
 import hasRole, { accessEvents } from "../../utils/roleAccess";
-import TalentCreate from "./EventCreate";
 import DeleteButton from "../../components/DeleteButton";
 import TalentEdit from "./EventEdit";
 import {
@@ -13,9 +12,13 @@ import {
 import dateTimeFormat from "../../utils/dateFormat";
 import EventCreate from "./EventCreate";
 import FilterEvent from "./FilterEvent";
+import { indexTalentsAsync } from "../../redux/talents/talentsThunk";
+import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
 
 export default function EventIndex() {
   const { events, loading } = useSelector((state) => state.events);
+  const { categories } = useSelector((state) => state.categories);
+  const { talents } = useSelector((state) => state.talents);
   const { role } = useSelector((state) => state.authUser.user);
   const [filter, setFilter] = useState({
     keyword: "",
@@ -51,6 +54,9 @@ export default function EventIndex() {
         category: filter.category,
       }),
     );
+
+    dispatch(indexTalentsAsync());
+    dispatch(categoriesIndexAsync());
   }, []);
   return (
     <LayoutAdmin>
@@ -70,7 +76,7 @@ export default function EventIndex() {
             <div className="col-12 mb-3">
               <div className="input-group">
                 {hasRole({ role, roles: accessEvents.tambah }) && (
-                  <EventCreate />
+                  <EventCreate categories={categories} talents={talents} />
                 )}
                 <input
                   type="text"
@@ -92,7 +98,11 @@ export default function EventIndex() {
               </div>
             </div>
             <div className="d-flex mb-2 justify-content-end">
-              <FilterEvent />
+              <FilterEvent
+                loading={loading}
+                filter={filter}
+                setFilter={setFilter}
+              />
             </div>
             <div className="col-12">
               <div className="card">

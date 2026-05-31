@@ -7,6 +7,7 @@ import LoggedInRoute from "../pages/wrapper/LoggedInRoute";
 import TalentIndex from "../pages/Talents/TalentIndex";
 import PaymentIndex from "../pages/Payments/PaymentIndex";
 import OrderIndex from "../pages/Orders/OrderIndex";
+import EventIndex from "../pages/Events/EventIndex";
 
 export default function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function AppRoutes() {
         <Route path="/talents" element={<TalentIndex />} />
         <Route path="/payments" element={<PaymentIndex />} />
         <Route path="/orders" element={<OrderIndex />} />
+        <Route path="/events" element={<EventIndex />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>
 

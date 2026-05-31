@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import LayoutAdmin from "../../layouts/admin";
 import { useEffect, useState } from "react";
 import dateTimeFormat from "../../utils/dateFormat";

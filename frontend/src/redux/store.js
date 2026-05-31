@@ -6,6 +6,7 @@ import talentsReducer from "./talents/talentsSlice";
 import imageReducer from "./image/imageSlice";
 import paymentReducer from "./payments/paymentsSlice";
 import orderReducer from "./orders/ordersSlice";
+import eventReducer from "./events/eventsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     image: imageReducer,
     payments: paymentReducer,
     orders: orderReducer,
+    events: eventReducer,
   },
 });

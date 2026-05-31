@@ -15,7 +15,6 @@ export default function EventCreate({ categories, talents }) {
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     title: "", //
-    price: 0, //
     date: "", //
     about: "", //
     venueName: "", //
@@ -337,7 +336,7 @@ export default function EventCreate({ categories, talents }) {
                       />
                     </div>
                   </div>
-                  <div className="col-6 col-lg-4">
+                  <div className="col-6 ">
                     <div className="mb-3">
                       <label className="form-label">Start Date</label>
                       <input
@@ -349,7 +348,7 @@ export default function EventCreate({ categories, talents }) {
                       />
                     </div>
                   </div>
-                  <div className="col-6 col-lg-4">
+                  <div className="col-6">
                     <div className="mb-3">
                       <label className="form-label">About</label>
                       <input
@@ -362,19 +361,7 @@ export default function EventCreate({ categories, talents }) {
                       />
                     </div>
                   </div>
-                  <div className="col-6 col-lg-4">
-                    <div className="mb-3">
-                      <label className="form-label">Price</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        onChange={onChangeHandler}
-                        value={form.price}
-                        name="price"
-                        placeholder="Enter Event Price"
-                      />
-                    </div>
-                  </div>
+
                   <div className="col-6 col-lg-4">
                     <div className="mb-3">
                       <label className="form-label">Status Event</label>

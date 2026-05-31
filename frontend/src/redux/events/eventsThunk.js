@@ -77,12 +77,20 @@ const createEventAsync = createAsyncThunk(
 const updateEventAsync = createAsyncThunk(
   "events/update",
   async (
-    { toast, setForm, form, modalRef, dispatch, id },
+    { toast, resetForm, form, modalRef, dispatch, id },
     { rejectWithValue },
   ) => {
     try {
       const response = await Api.put(`/cms/events/${id}`, form);
 
+      dispatch(
+        indexEventsAsync({
+          keyword: "",
+          talent: "",
+          status: "",
+          category: "",
+        }),
+      );
       toast.success(`${response.data.message}`, {
         duration: 4000,
         position: "top-right",
@@ -99,15 +107,7 @@ const updateEventAsync = createAsyncThunk(
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
 
-      setForm({ name: "", image: "", role: "" });
-      dispatch(
-        indexEventsAsync({
-          keyword: "",
-          talent: "",
-          status: "",
-          category: "",
-        }),
-      );
+      resetForm();
       dispatch(imageReset());
     } catch (e) {
       return rejectWithValue(e.response.data);

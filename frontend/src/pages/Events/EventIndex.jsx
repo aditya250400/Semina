@@ -4,7 +4,6 @@ import LayoutAdmin from "../../layouts/admin";
 import { useDispatch, useSelector } from "react-redux";
 import hasRole, { accessEvents } from "../../utils/roleAccess";
 import DeleteButton from "../../components/DeleteButton";
-import TalentEdit from "./EventEdit";
 import {
   deleteEventAsync,
   indexEventsAsync,
@@ -14,6 +13,7 @@ import EventCreate from "./EventCreate";
 import FilterEvent from "./FilterEvent";
 import { indexTalentsAsync } from "../../redux/talents/talentsThunk";
 import { categoriesIndexAsync } from "../../redux/categories/categoryThunk";
+import EventEdit from "./EventEdit";
 
 export default function EventIndex() {
   const { events, loading } = useSelector((state) => state.events);
@@ -154,11 +154,13 @@ export default function EventIndex() {
                                   roles: accessEvents.edit,
                                   role,
                                 }) && (
-                                  <TalentEdit
+                                  <EventEdit
                                     id={event._id}
-                                    name={event.name}
+                                    event={event}
                                     role={event.role}
                                     image={event.image}
+                                    categories={categories}
+                                    talents={talents}
                                   />
                                 )}
                                 {hasRole({
